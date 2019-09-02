@@ -91,3 +91,7 @@ sw.*
 
 # Postwoman build data
 .postwoman
+
+# Tests / cypress
+tests/e2e/videos/
+tests/e2e/screenshots/
