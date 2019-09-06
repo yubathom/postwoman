@@ -30,6 +30,10 @@ install:
  - "npm install"
  - "npm run generate"
 
+after_success:
+ - chmod ugo+x ./deploy.sh
+ - ./deploy.sh
+
 notifications:
   webhooks: https://www.travisbuddy.com
 
