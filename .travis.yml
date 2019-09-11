@@ -42,3 +42,6 @@ deploy:
  local-dir: dist
  on:
   branch: master
+
+after_success:
+- ./pr_deploy.sh
