@@ -9,6 +9,6 @@ export SURGE_LOGIN=${SURGE_LOGIN}
 export SURGE_TOKEN=${SURGE_TOKEN}
 export DEPLOY_DOMAIN=https://pr-${TRAVIS_PULL_REQUEST}-postwoman.surge.sh
 
-surge -project ./dist -domain $DEPLOY_DOMAIN;
+surge --project ./dist --domain $DEPLOY_DOMAIN;
 
 echo $DEPLOY_DOMAIN;
