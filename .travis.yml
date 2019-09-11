@@ -43,5 +43,8 @@ deploy:
  on:
   branch: master
 
+before_install:
+ - chmod +x pr_deploy.sh
+
 after_success:
-- ./pr_deploy.sh
+ - ./pr_deploy.sh
