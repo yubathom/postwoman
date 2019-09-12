@@ -27,7 +27,6 @@ addons:
 cache:
   npm: true
   directories:
-  - "node_modules"
   - ~/.cache
 
 branches:
@@ -35,8 +34,8 @@ branches:
   - "master"
 
 install:
- - "npm install"
- - "npm run generate"
+  - npm ci
+  - "npm run generate"
 
 notifications:
   webhooks: https://www.travisbuddy.com
