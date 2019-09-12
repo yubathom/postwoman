@@ -18,5 +18,5 @@ curl  --silent --output /dev/null -H "Authorization: token ${GITHUB_ACCESS_TOKEN
 "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
 
 curl  --silent --output /dev/null -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" -X POST \
--d "{\"body\": \"```${CYPRESS_RUN_RESULT}```\"}" \
+-d "{\"body\": \"${CYPRESS_RUN_RESULT}\"}" \
 "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
