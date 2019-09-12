@@ -12,5 +12,5 @@ export DEPLOY_DOMAIN=https://postwoman-pr-${TRAVIS_PULL_REQUEST}.surge.sh
 surge --project ./dist --domain $DEPLOY_DOMAIN;
 
 curl -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" -X POST \
--d "{\"body\": \"Pull request preview deployed at:\\n${$DEPLOY_DOMAIN}\"}"\
+-d "{\"body\": \"${$DEPLOY_DOMAIN}\"}" \
 "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
