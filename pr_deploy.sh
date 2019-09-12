@@ -11,9 +11,12 @@ export DEPLOY_DOMAIN=https://postwoman-preview-pr-${TRAVIS_PULL_REQUEST}.surge.s
 
 surge --project ./dist --domain $DEPLOY_DOMAIN;
 
-CYPRESS_baseUrl="${DEPLOY_DOMAIN}" npx cypress run
+export CYPRESS_RUN_RESULT=`CYPRESS_baseUrl="${DEPLOY_DOMAIN}" npx cypress run`
 
 curl  --silent --output /dev/null -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" -X POST \
 -d "{\"body\": \"${DEPLOY_DOMAIN}\"}" \
 "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
 
+curl  --silent --output /dev/null -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" -X POST \
+-d "{\"body\": \"```${CYPRESS_RUN_RESULT}```\"}" \
+"https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
