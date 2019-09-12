@@ -4,7 +4,6 @@ echo “Not a PR. Skipping surge deployment.”
 exit 0
 fi
 npm i -g surge
-npm i -g cypress
 
 export SURGE_LOGIN=${SURGE_LOGIN}
 export SURGE_TOKEN=${SURGE_TOKEN}
@@ -12,7 +11,7 @@ export DEPLOY_DOMAIN=https://postwoman-preview-pr-${TRAVIS_PULL_REQUEST}.surge.s
 
 surge --project ./dist --domain $DEPLOY_DOMAIN;
 
-CYPRESS_baseUrl="${DEPLOY_DOMAIN}" cypress run
+CYPRESS_baseUrl="${DEPLOY_DOMAIN}" npx cypress run
 
 curl  --silent --output /dev/null -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" -X POST \
 -d "{\"body\": \"${DEPLOY_DOMAIN}\"}" \
