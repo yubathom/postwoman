@@ -19,10 +19,18 @@ curl  -X POST \
 
 CYPRESS_RUN_RESULT=$(CYPRESS_baseUrl="${DEPLOY_DOMAIN}" npx cypress run)
 CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT%$'\r'}
+CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//\\/\\\\} # \ 
+CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//\//\\\/} # / 
+CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//\'/\\\'} # ' (not strictly needed ?)
+CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//\"/\\\"} # " 
+CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//   /\\t} # \t (tab)
+CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//
+/\\\n} # \n (newline)
+CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//^M/\\\r} # \r (carriage return)
+CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//^L/\\\f} # \f (form feed)
+CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//^H/\\\b} # \b (backspace)
 
 curl -X POST \
-  --silent \
-  --output /dev/null \
   -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
   -d -e '{"body":"'"$CYPRESS_RUN_RESULT"'"}' "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
 
