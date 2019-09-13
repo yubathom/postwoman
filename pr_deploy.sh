@@ -18,20 +18,14 @@ curl  -X POST \
   -d "{\"body\": \"${DEPLOY_DOMAIN}\"}" "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
 
 CYPRESS_RUN_RESULT=$(CYPRESS_baseUrl="${DEPLOY_DOMAIN}" npx cypress run)
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT%$'\r'}
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//\\/\\\\} # \ 
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//\//\\\/} # / 
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//\'/\\\'} # ' (not strictly needed ?)
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//\"/\\\"} # " 
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//   /\\t} # \t (tab)
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//
-/\\\n} # \n (newline)
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//^M/\\\r} # \r (carriage return)
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//^L/\\\f} # \f (form feed)
-CYPRESS_RUN_RESULT=${CYPRESS_RUN_RESULT//^H/\\\b} # \b (backspace)
+
+body_output=$(mktemp)
+
+jq \
+  --arg body "$CYPRESS_RUN_RESULT" \
+  '.["body"]=$body' \
+  <./tests/e2e/pr_messages/template.json > $body_output
 
 curl -X POST \
   -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
-  -d -e '{"body":"'"$CYPRESS_RUN_RESULT"'"}' "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
-
-echo -e $CYPRESS_RUN_RESULT
+  -d @$body_output "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
