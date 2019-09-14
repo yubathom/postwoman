@@ -19,13 +19,17 @@ curl  -X POST \
 
 CYPRESS_RUN_RESULT=$(CYPRESS_baseUrl="${DEPLOY_DOMAIN}" npx cypress run)
 
+tag_code="<code>"
+message_body=${tag_code}${CYPRESS_RUN_RESULT}
 body_output=$(mktemp)
 
 jq \
-  --arg body "$CYPRESS_RUN_RESULT" \
+  --arg body "$message_body" \
   '.["body"]=$body' \
   <./tests/e2e/pr_messages/template.json > $body_output
 
 curl -X POST \
   -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
+  -H 'Content-Type: application/json; charset=utf-8' \
   -d @$body_output "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
+
