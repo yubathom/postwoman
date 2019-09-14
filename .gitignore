@@ -95,5 +95,6 @@ sw.*
 # Cypress e2e files
 tests/e2e/screenshots/
 tests/e2e/videos/
+tests/ci/body_template.json
 t1.sh
 t2.sh

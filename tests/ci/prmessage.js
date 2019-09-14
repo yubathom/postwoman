@@ -1,7 +1,8 @@
+const fs = require('fs')
 const cypress = require('cypress')
-const axios = require('axios');
-const DEPLOY_DOMAIN = `https://postwoman-preview-pr-${process.env.TRAVIS_PULL_REQUEST}.surge.sh`
-const GITHUBAPI = `https://api.github.com/repos/${process.env.TRAVIS_REPO_SLUG}/issues/${process.env.TRAVIS_PULL_REQUEST}/comments`
+// const DEPLOY_DOMAIN = `https://postwoman-preview-pr-${process.env.TRAVIS_PULL_REQUEST}.surge.sh`
+const DEPLOY_DOMAIN="http://localhost:8080/"
+
 
 function niceMessage (result) {
   if (typeof(result) !== 'object') throw new Error('Result of e2e testing must be a Object')
@@ -28,16 +29,8 @@ function e2e (testUrl, messageBuilder) {
     }
   })
   .then((result) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
-        "Content-Type": "application/json"
-      }, 
-      data: messageBuilder(result)
-    }
-    axios.post(GITHUBAPI, config)
-    .then(githubRes =>  console.log(`Message sent: /n ${githubRes}`))
-    .catch(githubErr => console.error(`Failed to send message: /n ${githubErr}`))
+    const content = messageBuilder(result)
+    fs.writeFileSync('./tests/ci/body.json', JSON.stringify(content))
   })
   .catch((err) =>console.error(`Failed to run tests: /n${err}`))
 }

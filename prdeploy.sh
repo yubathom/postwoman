@@ -11,5 +11,13 @@ else
   surge --project ./dist --domain $DEPLOY_DOMAIN;
 
   node ./tests/ci/prmessage
+
+  body_template=./tests/ci/body_template.json
+
+  curl -X POST \
+    -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
+    -H 'Content-Type: application/json; charset=utf-8' \
+    -d @$body_template "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
+
 exit 0
 fi
