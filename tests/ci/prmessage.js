@@ -28,7 +28,7 @@ function e2e (testUrl, messageBuilder) {
   })
   .then((result) => {
     const content = messageBuilder(result)
-    fs.writeFileSync('./tests/ci/body.json', JSON.stringify(content))
+    fs.writeFileSync('./tests/ci/body_template.json', JSON.stringify(content))
   })
   .catch((err) =>console.error(`Failed to run tests: /n${err}`))
 }

@@ -10,7 +10,7 @@ else
 
   surge --project ./dist --domain $DEPLOY_DOMAIN;
 
-  node ./tests/ci/prmessage
+  node ./tests/ci/prmessage.js
 
   body_template=./tests/ci/body_template.json
 
