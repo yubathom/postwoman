@@ -96,3 +96,4 @@ sw.*
 tests/e2e/screenshots/
 tests/e2e/videos/
 t1.sh
+t2.sh

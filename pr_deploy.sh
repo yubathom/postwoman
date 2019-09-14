@@ -11,26 +11,28 @@ DEPLOY_DOMAIN=https://postwoman-preview-pr-${TRAVIS_PULL_REQUEST}.surge.sh
 
 surge --project ./dist --domain $DEPLOY_DOMAIN;
 
-curl  -X POST \
-  --silent \
-  --output /dev/null \
-  -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
-  -d "{\"body\": \"${DEPLOY_DOMAIN}\"}" "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
+node ./tests/e2e/pr_messages/message
 
-CYPRESS_RUN_RESULT=$(CYPRESS_baseUrl="${DEPLOY_DOMAIN}" npx cypress run)
+# curl  -X POST \
+#   --silent \
+#   --output /dev/null \
+#   -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
+#   -d "{\"body\": \"${DEPLOY_DOMAIN}\"}" "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
 
-tag_code="<code>"
-message_body=${tag_code}${CYPRESS_RUN_RESULT}
-body_template=./tests/e2e/pr_messages/template.json
-body_output=./tests/e2e/pr_messages/output.json
+# CYPRESS_RUN_RESULT=$(CYPRESS_baseUrl="${DEPLOY_DOMAIN}" npx cypress run)
 
-jq \
-  --arg body "$message_body" \
-  '.["body"]=$body' \
-  <$body_template > $body_output
+# tag_code="<code>"
+# message_body=${tag_code}${CYPRESS_RUN_RESULT}
+# body_template=./tests/e2e/pr_messages/template.json
+# body_output=./tests/e2e/pr_messages/output.json
 
-curl -X POST \
-  -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
-  -H 'Content-Type: application/json; charset=utf-8' \
-  -d @$body_output "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
+# jq \
+#   --arg body "$message_body" \
+#   '.["body"]=$body' \
+#   <$body_template > $body_output
+
+# curl -X POST \
+#   -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
+#   -H 'Content-Type: application/json; charset=utf-8' \
+#   -d @$body_output "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"
 
