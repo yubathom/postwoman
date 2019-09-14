@@ -21,12 +21,13 @@ CYPRESS_RUN_RESULT=$(CYPRESS_baseUrl="${DEPLOY_DOMAIN}" npx cypress run)
 
 tag_code="<code>"
 message_body=${tag_code}${CYPRESS_RUN_RESULT}
-body_output=$(mktemp)
+body_template=./tests/e2e/pr_messages/template.json
+body_output=./tests/e2e/pr_messages/output.json
 
 jq \
   --arg body "$message_body" \
   '.["body"]=$body' \
-  <./tests/e2e/pr_messages/template.json > $body_output
+  <$body_template > $body_output
 
 curl -X POST \
   -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
