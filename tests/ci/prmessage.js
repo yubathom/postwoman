@@ -30,7 +30,8 @@ function e2e (testUrl, messageBuilder) {
   .then((result) => {
     const config = {
       headers: {
-        'Authorization': `token ${process.env.GITHUB_ACCESS_TOKEN}`
+        Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
+        "Content-Type": "application/json"
       }, 
       data: messageBuilder(result)
     }
