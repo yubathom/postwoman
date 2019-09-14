@@ -1,8 +1,6 @@
 const fs = require('fs')
 const cypress = require('cypress')
-// const DEPLOY_DOMAIN = `https://postwoman-preview-pr-${process.env.TRAVIS_PULL_REQUEST}.surge.sh`
-const DEPLOY_DOMAIN="http://localhost:8080/"
-
+const DEPLOY_DOMAIN = `https://postwoman-preview-pr-${process.env.TRAVIS_PULL_REQUEST}.surge.sh`
 
 function niceMessage (result) {
   if (typeof(result) !== 'object') throw new Error('Result of e2e testing must be a Object')
