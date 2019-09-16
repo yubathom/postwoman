@@ -15,6 +15,7 @@ else
   body_template=./tests/ci/body_template.json
 
   curl -X POST \
+    --silent --output /dev/null \
     -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" \
     -H 'Content-Type: application/json; charset=utf-8' \
     -d @$body_template "https://api.github.com/repos/${TRAVIS_REPO_SLUG}/issues/${TRAVIS_PULL_REQUEST}/comments"

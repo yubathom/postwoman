@@ -23,12 +23,10 @@ function niceMessage (result) {
 | Spec | Tests | Passing | Failing | Pending | Skipped |
 | :--- | ----: | ------: | ------: | ------: | ------: |
 `
-
   result.runs.forEach(run => {
     const stats = run.stats
     specTable = specTable + `| ${run.spec.name} | ${stats.tests} | ${stats.passes} | ${stats.failures} | ${stats.pending} | ${stats.skipped} |\n`
   })
-
 
   return {
     "body": `
@@ -37,7 +35,6 @@ function niceMessage (result) {
 ${result.config.baseUrl}
 
 ### Tests (e2e)
-
 #### Results 
 
 | Decription    | Results                     |
@@ -52,8 +49,8 @@ ${result.config.baseUrl}
 #### Spec
 ${specTable}
 
->To run locally: __npm run dev:e2e__\n
-Crete and edit tests at: __/tests/e2e/integrations/__
+>Run locally: __npm run dev:e2e__\n
+>Create and edit tests at: __/tests/e2e/integrations/__
 `
   }
 }
