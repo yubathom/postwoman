@@ -18,7 +18,7 @@ node_js:
 addons:
  apt:
   packages:
-   - libgconf-2-4
+   - libgconf-2-4 # cypress binary dependency
 
 env:
  - DEPLOY_ENV=POSTWOMAN_IO
@@ -37,8 +37,10 @@ install:
  - "npm install firebase-tools"
  - "npm install"
 
-script:
+before_script:
  - "npm run test"
+
+script:
  - "cd functions"
  - "npm install"
  - "cd .."

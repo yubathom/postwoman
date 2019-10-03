@@ -1,9 +1,6 @@
 describe('Visit home', () => {
   it('Have a page title with "Postwoman"', () => {
-    cy.visit('/', { 
-      retryOnStatusCodeFailure: true,
-      timeout: 30000 // due to ci surge deployment added this big timeout
-    })
+    cy.visit('/')
       .get('title')
       .should('contain','Postwoman')
   })
