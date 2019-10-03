@@ -1,5 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 
+# Cypress error screenshots
+tests/e2e/screenshots
+
 # Firebase
 .firebase
 
