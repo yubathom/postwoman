@@ -1424,6 +1424,7 @@ export default {
       let flats = [
         "method",
         "url",
+        "label",
         "path",
         !this.urlExcludes.auth ? "auth" : null,
         !this.urlExcludes.httpUser ? "httpUser" : null,

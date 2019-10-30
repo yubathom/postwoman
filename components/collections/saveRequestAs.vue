@@ -18,7 +18,7 @@
       <ul>
         <li>
           <label for="selectLabel">Label</label>
-          <input type="text" id="selectLabel" v-model="requestData.name" v-bind:placeholder="defaultRequestName" />
+          <input type="text" id="selectLabel" v-model="label" v-bind:placeholder="defaultRequestName" />
           <label for="selectCollection">Collection</label>
           <select type="text" id="selectCollection" v-model="requestData.collectionIndex">
             <option
@@ -72,7 +72,6 @@
       return {
         defaultRequestName: "My New Request",
         requestData: {
-          name: undefined,
           collectionIndex: undefined,
           folderIndex: undefined,
           requestIndex: undefined
@@ -91,6 +90,11 @@
       }
     },
     computed: {
+      label: {
+        get() { return this.$store.state.request.label; },
+        set(value) { this.$store.commit('setState', { value, 'attribute': 'label' }) },
+      },
+
       folders() {
         const userSelectedAnyCollection =
           this.$data.requestData.collectionIndex !== undefined;
@@ -136,7 +140,7 @@
 
         const requestUpdated = {
           ...this.$props.editingRequest,
-          name: this.$data.requestData.name || this.$data.defaultRequestName,
+          name: this.label || this.$data.defaultRequestName,
           collection: this.$data.requestData.collectionIndex
         };
 
