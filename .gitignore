@@ -98,3 +98,6 @@ sw.*
 
 # File explorer
 .directory
+
+# Lib builds
+/lib/dist

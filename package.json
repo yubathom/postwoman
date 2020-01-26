@@ -4,6 +4,15 @@
     "description": "A free, fast and beautiful API request builder",
     "author": "liyasthomas",
     "private": true,
+    "main": "lib/dist/postwoman.ssr.js",
+    "browser": "lib/dist/postwoman.esm.js",
+    "module": "lib/dist/postwoman.esm.js",
+    "unpkg": "lib/dist/postwoman.min.js",
+    "files": [
+        "lib/dist/*",
+        "lib/**/*.vue",
+        "!src/serve-dev.*"
+    ],
     "scripts": {
         "predev": "node build.js --dev",
         "dev": "nuxt",
@@ -15,7 +24,11 @@
         "e2e": "cypress run",
         "e2e:open": "cypress open",
         "dev:e2e": "start-server-and-test dev http://localhost:3000 e2e:open",
-        "test": "start-server-and-test dev http://localhost:3000 e2e"
+        "test": "start-server-and-test dev http://localhost:3000 e2e",
+        "lib-build": "rollup --config lib/build/rollup.config.js",
+        "lib-build:ssr": "rollup --config lib/build/rollup.config.js --format cjs",
+        "lib-build:es": "rollup --config lib/build/rollup.config.js --format es",
+        "lib-build:unpkg": "rollup --config lib/build/rollup.config.js --format iife"
     },
     "dependencies": {
         "@nuxtjs/axios": "^5.9.3",
@@ -41,6 +54,17 @@
         "cypress": "^3.8.3",
         "node-sass": "^4.13.1",
         "sass-loader": "^8.0.2",
-        "start-server-and-test": "^1.10.6"
+        "start-server-and-test": "^1.10.6",
+        "rollup": "^1.27.13",
+        "@rollup/plugin-replace": "^2.2.1",
+        "rollup-plugin-vue": "^5.1.5",
+        "@rollup/plugin-alias": "^2.2.0",
+        "@rollup/plugin-commonjs": "^11.0.1",
+        "rollup-plugin-babel": "^4.3.3",
+        "vue": "^2.6.10",
+        "@vue/cli-plugin-babel": "^4.1.0",
+        "@vue/cli-service": "^4.1.0",
+        "rollup-plugin-terser": "^5.1.3",
+        "minimist": "^1.2.0"
     }
 }
