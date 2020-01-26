@@ -3,7 +3,6 @@
     "version": "1.5.0",
     "description": "A free, fast and beautiful API request builder",
     "author": "liyasthomas",
-    "private": true,
     "main": "lib/dist/postwoman.ssr.js",
     "browser": "lib/dist/postwoman.esm.js",
     "module": "lib/dist/postwoman.esm.js",
@@ -11,7 +10,7 @@
     "files": [
         "lib/dist/*",
         "lib/**/*.vue",
-        "!src/serve-dev.*"
+        "!lib/dev.*"
     ],
     "scripts": {
         "predev": "node build.js --dev",
@@ -25,6 +24,7 @@
         "e2e:open": "cypress open",
         "dev:e2e": "start-server-and-test dev http://localhost:3000 e2e:open",
         "test": "start-server-and-test dev http://localhost:3000 e2e",
+        "lib-dev": "vue-cli-service serve lib/dev.js",
         "lib-build": "rollup --config lib/build/rollup.config.js",
         "lib-build:ssr": "rollup --config lib/build/rollup.config.js --format cjs",
         "lib-build:es": "rollup --config lib/build/rollup.config.js --format es",
