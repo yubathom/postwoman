@@ -1,5 +1,5 @@
 describe('Methods', () => {
-  const methods = [ 'POST', 'HEAD', 'POST', 'PUT', 'DELETE','OPTIONS', 'PATCH']
+  const methods = [ 'POST', 'PUT']
   methods.forEach((method) => {
       it(`Change the default method GET to ${method} with url query`, () => {
         cy.visit(`/?method=${method}`)
@@ -22,7 +22,7 @@ describe('Url and path', () => {
 describe('Authentication', () => {
   it(`Change default auth 'None' to 'Basic' and set httpUser and httpPassword with url query`, () => {
     cy.visit(`?&auth=Basic Auth&httpUser=foo&httpPassword=bar`, { retryOnStatusCodeFailure: true })
-      .get('#authentication').contains('Authentication').click()
+      .get('#auth').contains('Basic Auth').click({ force: true })
         .then(() => {
           cy.get('input[name="http_basic_user"]', { timeout: 500 })
             .invoke('val')
@@ -44,7 +44,7 @@ describe('Authentication', () => {
 
   it(`Change default auth 'None' to 'Bearer token' and set bearerToken with url query`, () => {
     cy.visit(`/?auth=Bearer Token&bearerToken=${base64Tkn}`, { retryOnStatusCodeFailure: true })
-        .get('#authentication').contains('Authentication').click()
+        .get('#auth').contains('Bearer Token').click({ force: true })
           .then(() => {
             cy.get('input[name="bearer_token"]', { timeout: 500 })
               .invoke('val')
