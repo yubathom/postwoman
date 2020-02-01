@@ -5,5 +5,6 @@
   "fixturesFolder": "tests/e2e/fixtures",
   "supportFile": "tests/e2e/support",
   "pluginsFile": false,
-  "video": false
+  "video": false,
+  "projectId": "ebxc91"
 }

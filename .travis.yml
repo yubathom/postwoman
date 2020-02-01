@@ -40,7 +40,7 @@ install:
   - "npm install"
 
 before_script:
-  - "npm run test"
+  - ""start-server-and-test dev http-get://localhost:3000 e2e:ci"
 
 script:
   - "cd functions"
