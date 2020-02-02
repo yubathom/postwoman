@@ -8,17 +8,6 @@ describe('Methods', () => {
   })
 })
 
-describe('Url and path', () => {
-  it('Change default url with query and reset default path to empty string and make a request to cat api', () => {
-      cy.seedAndVisit('catapi', '/?url=https://api.thecatapi.com&path=')
-      .get('#url').then((el) => expect(el.val() === 'https://api.thecatapi.com').to.equal(true))
-      .get("#path").then((el) => expect(el.val() === '').to.equal(true))
-      .get('#response-details-wrapper').should($wrapper => {
-        expect($wrapper).to.contain('FAKE Cat API')
-      })
-  })
-})
-
 describe('Authentication', () => {
   it(`Change default auth 'None' to 'Basic' and set httpUser and httpPassword with url query`, () => {
     cy.visit(`?&auth=Basic Auth&httpUser=foo&httpPassword=bar`, { retryOnStatusCodeFailure: true })
