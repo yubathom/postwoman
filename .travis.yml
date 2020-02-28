@@ -13,7 +13,7 @@
 
 language: node_js
 node_js:
-  - "12"
+- 12
 
 os: linux
 
@@ -22,35 +22,20 @@ addons:
     packages:
       - libgconf-2-4 # cypress binary dependency
 
-env:
-  - DEPLOY_ENV=POSTWOMAN_IO
-
-cache:
-  npm: true
-  directories:
-    - "node_modules"
-    - ~/.cache
+cache: npm
 
 branches:
   only:
-    - "master"
+    - master
 
 install:
-  - "npm install firebase-tools"
-  - "npm install"
+  - npm ci
 
 before_script:
-  - "npm run build" # use nuxt build and start to run tests
-  - "npm run test"
+  - npm run build # use nuxt build and start to run tests
 
 script:
-  - "cd functions"
-  - "npm install"
-  - "cd .."
-  - "npm run generate"
+  - npm test
 
 notifications:
   webhooks: https://www.travisbuddy.com
-
-after_success:
-  - firebase deploy --token $FIREBASE_TOKEN
